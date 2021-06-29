@@ -49,7 +49,7 @@ jobs:
           name: Parse orgs 2
           command: >
             ORGS=$(sfdx force:org:list -w 30 --json)
-            echo $ORGS
+            echo "$ORGS"
 
       # - run:
       #     name: Test jq
