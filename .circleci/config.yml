@@ -32,7 +32,7 @@ workflows:
       - apex/scratch-deploy-and-test:
           defaultusername: devhub20210620@prt.com
           deploydir: ./src
-          permset: 
+          permset: ""
           sampledata-path:
           scratch-alias: ${CIRCLE_BRANCH}
           scratch-def: ./config/project-scratch-def.json
