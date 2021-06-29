@@ -1,22 +1,37 @@
-jobs:
-  create-open-delete:
-    executor: sfdx/default
-    steps:
-      - checkout
-      - sfdx/install
-      - sfdx/auth:
-          defaultusername: devhub20210620@prt.com
-      - sfdx/scratch-create:
-          scratch-alias: circleci
-          scratch-config: ./config/project-scratch-def.json
-      - sfdx/scratch-open:
-          scratch-alias: circleci
-      - sfdx/scratch-delete:
-          scratch-alias: circleci
+# jobs:
+#   create-open-delete:
+#     executor: sfdx/default
+#     steps:
+#       - checkout
+#       - sfdx/install
+#       - sfdx/auth:
+#           defaultusername: devhub20210620@prt.com
+#       - sfdx/scratch-create:
+#           scratch-alias: circleci
+#           scratch-config: ./config/project-scratch-def.json
+#       - sfdx/scratch-open:
+#           scratch-alias: circleci
+#       - sfdx/scratch-delete:
+#           scratch-alias: circleci
+# orbs:
+#   sfdx: circleci/salesforce-sfdx@2.2.0
+# version: 2.1
+# workflows:
+#   basic-test:
+#     jobs:
+#       - create-open-delete
+
+
 orbs:
-  sfdx: circleci/salesforce-sfdx@2.2.0
+  apex: circleci/salesforce-apex@1.0.1
 version: 2.1
 workflows:
-  basic-test:
+  deploy_test:
     jobs:
-      - create-open-delete
+      - apex/scratch-deploy-and-test:
+          defaultusername: devhub20210620@prt.com
+          # deploydir: ./src
+          # permset: circleci
+          # sampledata-path: ./sampledata
+          scratch-alias: ${CIRCLE_BRANCH}
+          scratch-def: ./config/project-scratch-def.json
