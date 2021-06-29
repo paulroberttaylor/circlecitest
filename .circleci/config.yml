@@ -22,11 +22,11 @@ jobs:
 
     steps:
 
-      # - checkout
+      - checkout
 
       - sfdx/install
 
-      # - jq/install
+      - jq/install
 
       - run:
           name: Print username
@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Test scripts
           command: |
-            RESULTS=$(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
+            RESULTS=$(sfdx force:apex:test:run -l RunLocalTests -u << pipeline.parameters.USERNAME >> -w 30 --json)
             echo $RESULTS
 
       # - run:
