@@ -7,7 +7,7 @@ parameters:
 
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
-  jq: circleci/jq
+  jq: circleci/jq@2.2.0
 
 workflows:
   basic-test:
