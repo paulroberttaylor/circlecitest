@@ -26,6 +26,8 @@ jobs:
 
       - sfdx/install
 
+      - jq/install
+
       - sfdx/auth:
           defaultusername: devhub20210620@prt.com
 
