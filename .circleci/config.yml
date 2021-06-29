@@ -39,11 +39,11 @@ jobs:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
       #     scratch-config: ./config/project-scratch-def.json
 
-      - run:
-          name: Parse orgs
-          command: |
-            ORGS=echo $(sfdx force:org:list -w 30 --json)
-            echo $ORGS
+      # - run:
+      #     name: Parse orgs
+      #     command: |
+      #       ORGS=echo $(sfdx force:org:list -w 30 --json)
+      #       echo $ORGS
 
       - run:
           name: Parse orgs 2
