@@ -18,6 +18,16 @@ jobs:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
           # scratch-alias: ${CIRCLE_BRANCH}
           scratch-config: ./config/project-scratch-def.json
+
+      - run:
+          command: >
+            echo You now have access to the sfdx cli and may execute commands
+            against it.
+
+            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
+          name: Run your SFDX commands here
+
+
       # - run:
       #   commnd: sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
       - sfdx/scratch-delete:
