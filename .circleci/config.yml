@@ -1,38 +1,38 @@
-jobs:
-  create-open-delete:
-    executor: sfdx/default
-    steps:
-      - checkout
-      - sfdx/install
-      - sfdx/auth:
-          defaultusername: devhub20210620@prt.com
-      - sfdx/scratch-create:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
-          # scratch-alias: ${CIRCLE_BRANCH}
-          scratch-config: ./config/project-scratch-def.json
-      - sfdx/scratch-open:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
-      - sfdx/scratch-delete:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
-orbs:
-  sfdx: circleci/salesforce-sfdx@2.2.0
-version: 2.1
-workflows:
-  basic-test:
-    jobs:
-      - create-open-delete
-
-
+# jobs:
+#   create-open-delete:
+#     executor: sfdx/default
+#     steps:
+#       - checkout
+#       - sfdx/install
+#       - sfdx/auth:
+#           defaultusername: devhub20210620@prt.com
+#       - sfdx/scratch-create:
+#           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
+#           # scratch-alias: ${CIRCLE_BRANCH}
+#           scratch-config: ./config/project-scratch-def.json
+#       - sfdx/scratch-open:
+#           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
+#       - sfdx/scratch-delete:
+#           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
 # orbs:
-#   apex: circleci/salesforce-apex@1.0.1
+#   sfdx: circleci/salesforce-sfdx@2.2.0
 # version: 2.1
 # workflows:
-#   deploy_test:
+#   basic-test:
 #     jobs:
-#       - apex/scratch-deploy-and-test:
-#           defaultusername: devhub20210620@prt.com
-#           deploydir: ./src
-#           permset: 
-#           sampledata-path:
-#           scratch-alias: ${CIRCLE_BRANCH}
-#           scratch-def: ./config/project-scratch-def.json
+#       - create-open-delete
+
+
+orbs:
+  apex: circleci/salesforce-apex@1.0.1
+version: 2.1
+workflows:
+  deploy_test:
+    jobs:
+      - apex/scratch-deploy-and-test:
+          defaultusername: devhub20210620@prt.com
+          deploydir: ./src
+          permset: 
+          sampledata-path:
+          scratch-alias: ${CIRCLE_BRANCH}
+          scratch-def: ./config/project-scratch-def.json
