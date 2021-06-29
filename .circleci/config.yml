@@ -4,10 +4,10 @@ orbs:
 workflows:
   basic-test:
     jobs:
-      - create-open-delete
+      - create-push-delete
 
 jobs:
-  create-open-delete:
+  create-push-delete:
     executor: sfdx/default
     steps:
       - checkout
@@ -18,10 +18,9 @@ jobs:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
           # scratch-alias: ${CIRCLE_BRANCH}
           scratch-config: ./config/project-scratch-def.json
-      # - sfdx/scratch-open:
-      #     scratch-alias: circle_build_$CIRCLE_BUILD_NUM
-      - sfdx/scratch-up:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
+      - run:
+        commnd: >
+        sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
       - sfdx/scratch-delete:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
 
