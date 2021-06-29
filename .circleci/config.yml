@@ -86,8 +86,8 @@ jobs:
       #       echo $TEST_RESULT | jq '.result.outcome'
             
 
-      # - sfdx/scratch-delete:
-      #     scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
+      - sfdx/scratch-delete:
+          scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
       # - store_test_results:
       #     path: /tmp/test-reports
