@@ -36,7 +36,8 @@ jobs:
           scratch-config: ./config/project-scratch-def.json
 
       - run:
-          command: echo $(<< pipeline.parameters.USERNAME >>)
+          name: Print username
+          command: echo "<< pipeline.parameters.USERNAME >>""
 
       - run:
           command: >
