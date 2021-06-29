@@ -32,6 +32,6 @@ workflows:
           defaultusername: devhub20210620@prt.com
           deploydir: ./src
           permset: circleci
-          # sampledata-path: ./sampledata
+          sampledata-path: ./sampledata
           scratch-alias: ${CIRCLE_BRANCH}
           scratch-def: ./config/project-scratch-def.json
