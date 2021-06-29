@@ -47,4 +47,5 @@ jobs:
       - sfdx/scratch-delete:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
-      - store_test_results 
+      - store_test_results:
+          path: /tmp/test-reports
