@@ -14,7 +14,6 @@ public class MyNewClassTest {
         Integer theSum;
 
         System.Test.startTest();
-
             theSum = newClass.sum(1, 2);
         System.Test.stopTest();
 

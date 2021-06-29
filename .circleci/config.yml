@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
-  sfdx: circleci/salesforce-sfdx@2.2.0
+  # sfdx: circleci/salesforce-sfdx@2.2.0
+  apex: circleci/salesforce-apex@1.0.1
 workflows:
   basic-test:
     jobs:
