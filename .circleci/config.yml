@@ -55,16 +55,16 @@ jobs:
           command: |
             ORGS=$(sfdx force:org:list --json)
             echo "$ORGS"
-            echo $ORGS | jq '.result.outcome'
+            echo $ORGS | jq '.result.nonScratchOrgs[0].username'
 
       # - run:
       #     name: Test jq
       #     command: echo $()
 
-      # - run:
-      #     command: >
-      #       sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
-      #     name: Push source
+      - run:
+          name: Push source
+          command: >
+            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
       # - run:
       #     name: Test scripts
@@ -73,11 +73,11 @@ jobs:
       #       echo "This is another line."
       #       sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
 
-      # - run:
-      #     name: Test scripts
-      #     command: |
-      #       RESULTS=$(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
-      #       echo $RESULTS
+      - run:
+          name: Test scripts
+          command: |
+            RESULTS=$(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
+            echo $RESULTS
 
       # - run:
       #     name: Run tests
