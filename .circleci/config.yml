@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
-  # sfdx: circleci/salesforce-sfdx@2.2.0
-  apex: circleci/salesforce-apex@1.0.1
+  sfdx: circleci/salesforce-sfdx@2.2.0
 workflows:
   basic-test:
     jobs:
@@ -22,8 +21,8 @@ jobs:
 
       - run:
           command: >
-            echo You now have access to the sfdx cli and may execute commands against it.
-            echo circle_build_$CIRCLE_BUILD_NUM
+            
+            echo (Build: circle_build_$CIRCLE_BUILD_NUM)
 
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
           name: Run your SFDX commands here
