@@ -7,6 +7,8 @@ parameters:
 
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
+  jq: circleci/jq
+
 workflows:
   basic-test:
     jobs:
@@ -18,6 +20,8 @@ jobs:
     executor: sfdx/default
 
     steps:
+
+      - 
 
       - checkout
 
@@ -41,7 +45,7 @@ jobs:
 
       - run:
           command: >
-            sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30
+            sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
           name: Run tests
 
       - sfdx/scratch-delete:
