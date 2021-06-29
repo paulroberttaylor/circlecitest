@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Print username
           command: echo "<< pipeline.parameters.USERNAME >>"
-          
+
       - sfdx/auth:
           defaultusername: devhub20210620@prt.com
 
@@ -44,25 +44,25 @@ jobs:
       #     name: Test jq
       #     command: echo $()
 
-      # - run:
-      #     command: >
-      #       sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
-      #     name: Push source
+      - run:
+          command: >
+            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
+          name: Push source
 
-      # - run:
-      #     name: Test scripts
-      #     command: |
-      #       echo "This is a test scripts run."
-      #       echo "This is another line."
-      #       sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
-      #       $TESTRESULTS="wtf?"
-      #       echo $TESTRESULTS
+      - run:
+          name: Test scripts
+          command: |
+            echo "This is a test scripts run."
+            echo "This is another line."
+            sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
+            $TESTRESULTS="wtf?"
+            echo $TESTRESULTS
 
-      # - run:
-      #     name: Run tests
-      #     command: >
-      #       echo $(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
-      #       # echo $TEST_RESULT | jq '.result.outcome'
+      - run:
+          name: Run tests
+          command: >
+            echo $(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
+            echo $TEST_RESULT | jq '.result.outcome'
             
 
       # - sfdx/scratch-delete:
