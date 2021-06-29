@@ -5,6 +5,7 @@ workflows:
   basic-test:
     jobs:
       - create-open-delete
+      - delete-org
 
 jobs:
   create-open-delete:
@@ -20,8 +21,13 @@ jobs:
           scratch-config: ./config/project-scratch-def.json
       - sfdx/scratch-open:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
+
+  delete-org: 
+    executor: sfdx/default
+    steps:
       - sfdx/scratch-delete:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
+
 
 
 # orbs:
