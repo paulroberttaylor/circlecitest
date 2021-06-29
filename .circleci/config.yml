@@ -35,9 +35,9 @@ jobs:
       - sfdx/auth:
           defaultusername: devhub20210620@prt.com
 
-      # - sfdx/scratch-create:
-      #     scratch-alias: << pipeline.parameters.USERNAME >>
-      #     scratch-config: ./config/project-scratch-def.json
+      - sfdx/scratch-create:
+          scratch-alias: << pipeline.parameters.USERNAME >>
+          scratch-config: ./config/project-scratch-def.json
 
       - run:
           name: Parse orgs
