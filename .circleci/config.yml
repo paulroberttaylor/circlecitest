@@ -8,43 +8,31 @@ workflows:
 
 jobs:
   create-push-delete:
+
     executor: sfdx/default
+    
     steps:
+
       - checkout
+
       - sfdx/install
+
       - sfdx/auth:
           defaultusername: devhub20210620@prt.com
+
       - sfdx/scratch-create:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
-          # scratch-alias: ${CIRCLE_BRANCH}
+          scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
           scratch-config: ./config/project-scratch-def.json
 
       - run:
           command: >
-            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
+            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
           name: Push source
 
       - run:
           command: >
-            sfdx force:apex:test
-          name: Run local tests
+            sfdx force:apex:test:run
+          name: Run tests
 
-      # - run:
-      #   commnd: sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
       - sfdx/scratch-delete:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
-
-
-# orbs:
-#   apex: circleci/salesforce-apex@1.0.1
-# version: 2.1
-# workflows:
-#   deploy_test:
-#     jobs:
-#       - apex/scratch-deploy-and-test:
-#           defaultusername: devhub20210620@prt.com
-#           deploydir: ./src
-#           permset: ""
-#           sampledata-path:
-#           scratch-alias: ${CIRCLE_BRANCH}
-#           scratch-def: ./config/project-scratch-def.json
+          scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
