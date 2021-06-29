@@ -55,6 +55,7 @@ jobs:
           command: |
             ORGS=$(sfdx force:org:list --json)
             echo "$ORGS"
+            echo $ORGS | jq '.result.outcome'
 
       # - run:
       #     name: Test jq
