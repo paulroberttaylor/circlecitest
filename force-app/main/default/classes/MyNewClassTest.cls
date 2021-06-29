@@ -1,0 +1,24 @@
+@isTest
+public class MyNewClassTest {
+
+    @TestSetup
+    static void makeData(){
+        
+    }
+
+    @isTest
+    static void AddTwoDigitsReturnsTheSum() {
+
+        MyNewClass newClass = new MyNewClass();
+
+        Integer theSum;
+
+        System.Test.startTest();
+
+            theSum = newClass.sum(1, 2);
+        System.Test.stopTest();
+
+        System.assertEquals(2, theSum, 'Product was incorrect');
+
+    }
+}
