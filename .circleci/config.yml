@@ -42,12 +42,12 @@ jobs:
       - run:
           name: Parse orgs
           command: |
-            sfdx force:org:list -w 30 --json
+            sfdx force:org:list --json
 
       - run:
           name: Parse orgs 2
           command: |
-            ORGS=$(echo sfdx force:org:list -w 30 --json)
+            ORGS=$(echo sfdx force:org:list --json)
             echo "$ORGS"
 
       # - run:
