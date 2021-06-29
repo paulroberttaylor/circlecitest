@@ -24,20 +24,21 @@ jobs:
 
       - checkout
 
-      # - sfdx/install
+      - sfdx/install
 
       - jq/install
-
-      # - sfdx/auth:
-      #     defaultusername: devhub20210620@prt.com
-
-      # - sfdx/scratch-create:
-      #     scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
-      #     scratch-config: ./config/project-scratch-def.json
 
       - run:
           name: Print username
           command: echo "<< pipeline.parameters.USERNAME >>"
+          
+      - sfdx/auth:
+          defaultusername: devhub20210620@prt.com
+
+      - sfdx/scratch-create:
+          scratch-alias: << pipeline.parameters.USERNAME >>
+          scratch-config: ./config/project-scratch-def.json
+
 
       # - run:
       #     name: Test jq
