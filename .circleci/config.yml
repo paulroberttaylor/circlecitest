@@ -36,7 +36,7 @@ jobs:
 
       - run:
           command: >
-            echo << pipeline.parameters.USERNAME >>
+            echo $(<< pipeline.parameters.USERNAME >>)
 
       - run:
           command: >
