@@ -22,11 +22,12 @@ jobs:
       - run:
           command: >
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
-          name: Run your SFDX commands here
+          name: Push source
 
       - run:
           command: >
-            sfdx force:apex:test -l RunLocalTests
+            sfdx force:apex:test
+          name: Run local tests
 
       # - run:
       #   commnd: sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
