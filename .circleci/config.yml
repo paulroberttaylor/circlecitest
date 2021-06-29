@@ -7,12 +7,13 @@ jobs:
       - sfdx/auth:
           defaultusername: devhub20210620@prt.com
       - sfdx/scratch-create:
-          scratch-alias: ${CIRCLE_BRANCH}
+          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
+          # scratch-alias: ${CIRCLE_BRANCH}
           scratch-config: ./config/project-scratch-def.json
       - sfdx/scratch-open:
-          scratch-alias: circleci
+          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
       - sfdx/scratch-delete:
-          scratch-alias: circleci
+          scratch-alias: circle_build_$CIRCLE_BUILD_NUM
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
 version: 2.1
