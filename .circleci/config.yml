@@ -19,8 +19,7 @@ jobs:
           # scratch-alias: ${CIRCLE_BRANCH}
           scratch-config: ./config/project-scratch-def.json
       - run:
-        commnd: >
-        sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
+        commnd: sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
       - sfdx/scratch-delete:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM
 
