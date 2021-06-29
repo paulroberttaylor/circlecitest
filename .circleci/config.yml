@@ -49,14 +49,18 @@ jobs:
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
           name: Push source
 
+      # - run:
+      #     name: Test scripts
+      #     command: |
+      #       echo "This is a test scripts run."
+      #       echo "This is another line."
+      #       sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
+
       - run:
           name: Test scripts
           command: |
-            echo "This is a test scripts run."
-            echo "This is another line."
-            sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
-            # $TESTRESULTS="wtf?"
-            # echo $TESTRESULTS
+            RESULTS=sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
+            echo $RESULTS
 
       - run:
           name: Run tests
