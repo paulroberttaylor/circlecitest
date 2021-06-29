@@ -1,4 +1,10 @@
 version: 2.1
+
+parameters:
+    USERNAME:
+        type: string
+        default: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
+
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
 workflows:
@@ -10,7 +16,7 @@ jobs:
   create-push-delete:
 
     executor: sfdx/default
-    
+
     steps:
 
       - checkout
@@ -26,12 +32,13 @@ jobs:
 
       - run:
           command: >
+            echo $USERNAME
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
           name: Push source
 
       - run:
           command: >
-            sfdx force:apex:test:run
+            sfdx force:apex:test:run -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
           name: Run tests
 
       - sfdx/scratch-delete:
