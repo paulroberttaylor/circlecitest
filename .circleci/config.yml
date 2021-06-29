@@ -41,13 +41,14 @@ jobs:
           name: Push source
 
       - run:
-          command:
+          command: |
             TEST_RESULT=$(echo sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json | jq '.result.outcome')
             echo $TEST_RESULT
+            
           name: Run tests
 
       - sfdx/scratch-delete:
           scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
-      - store_test_results:
-          path: /tmp/test-reports
+      # - store_test_results:
+      #     path: /tmp/test-reports
