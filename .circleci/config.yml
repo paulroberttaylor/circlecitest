@@ -21,12 +21,12 @@ jobs:
 
       - run:
           command: >
-            
-            echo (Build: circle_build_$CIRCLE_BUILD_NUM)
-
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
           name: Run your SFDX commands here
 
+      - run:
+          command: >
+            sfdx force:apex:test -l RunLocalTests
 
       # - run:
       #   commnd: sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
