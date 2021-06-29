@@ -16,12 +16,6 @@ workflows:
 
 jobs:
 
-  deploy:
-    steps: 
-      - run:
-        name: Does it?
-        command: echo Deploy job
-
   create-push-delete:
 
     executor: sfdx/default
