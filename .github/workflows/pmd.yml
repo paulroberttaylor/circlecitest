@@ -31,6 +31,7 @@ jobs:
       
       - name: Print PMD results
         run: |
+          echo "Printing PMD results"
           echo ${{steps.pmd-analysis.outputs.error-found}}
 
       # - name: Upload results to GitHub
