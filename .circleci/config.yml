@@ -56,7 +56,7 @@ jobs:
 
       - store_artifacts:
           path: /tmp/artifacts
-          destination: static-analysis.html
+          #destination: static-analysis.html
 
 
 
