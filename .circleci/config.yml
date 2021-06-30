@@ -59,7 +59,7 @@ jobs:
               fi
           
       - save_cache:
-          key: pmd-v6.0.1
+          key: pmd-v6.36.0
           paths: 
               - pmd-bin-6.36.0
       - run: 
