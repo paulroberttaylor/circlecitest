@@ -51,6 +51,7 @@ jobs:
           key: pmd-v6.36.0
           paths: 
               - pmd-bin-6.36.0
+
       - run: 
           name: Run Static Analysis
           command: |
@@ -58,6 +59,14 @@ jobs:
               
               echo "Show the analysis here:"
               echo $(cat /temp/artifacts/static-analysis.html)
+
+      - run:
+          name: Diff only PMD
+          command: |
+
+            echo "Source ${{steps.branches.outputs.source}}"
+            #git diff --name-only --diff-filter=d origin/"$TARGET_BRANCH"..origin/"${{SOURCE_BRANCH#}"refs/heads/"}" | paste -s -d "," >> diff-file.csv
+
 
       - store_artifacts:
           path: /tmp/artifacts
