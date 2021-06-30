@@ -68,11 +68,13 @@ jobs:
 
       - name: No PMD Errors?
         run: |
+          echo "::set-output name=error-found::false"
           echo ${{ steps.pmd-analysis.outputs.error-found }}
-          # if ${{ steps.pmd-analysis.outputs.error-found }}
-          # then
-          #   exit 3
-          # fi
+
+        # if ${{ steps.pmd-analysis.outputs.error-found }}
+        # then
+        #   exit 3
+        # fi
 
       #     echo "::set-output name=error-found::false"
       #     while read -r rule; do
