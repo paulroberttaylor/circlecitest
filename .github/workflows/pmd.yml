@@ -69,6 +69,8 @@ jobs:
       - name: No PMD Errors?
         run: |
           echo "::set-output name=error-found::false"
+          echo $(${{ steps }})
+          echo $(${ steps })
           echo ${{ steps.pmd-analysis.outputs.error-found }}
 
         # if ${{ steps.pmd-analysis.outputs.error-found }}
