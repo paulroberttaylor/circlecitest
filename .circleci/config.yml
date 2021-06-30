@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Creating Artifacts folder
           command: |
-            mkdir /artifacts;            
+            mkdir artifacts;
             
       - run:
           name: Install PMD
@@ -55,10 +55,10 @@ jobs:
       - run: 
           name: Run Static Analysis
           command: |
-              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r static-analysis.txt 
+              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r ./artifacts/static-analysis.txt 
               echo $(cat static-analysis.txt)
       - store_artifacts:
-          path: /artifacts/static-analysis.txt
+          path: ./artifacts/static-analysis.txt
 
 
   create-push-delete:
