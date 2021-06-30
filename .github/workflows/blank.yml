@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  push:
+  #push:
     #branches: [ circleci-project-setup ]
-  pull_request:
+  #pull_request:
     #branches: [ circleci-project-setup ]
 
   workflow_dispatch:
