@@ -23,8 +23,8 @@ jobs:
         uses: synergy-au/pmd-analyser-action@v2
         with:
           pmd-version: '6.34.0'
-          file-path: './force-app/**'
-          rules-path: './pmd-ruleset.xml'
+          file-path: 'force-app/**'
+          rules-path: 'pmd-ruleset.xml'
           error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
           note-rules: 'ApexDoc'
       - name: Upload results to GitHub
