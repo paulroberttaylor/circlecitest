@@ -22,29 +22,36 @@ jobs:
 
       - name: Install PMD
         run: |
-        
+
           wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
           unzip pmd-bin-6.36.0.zip
           pmd-bin-6.36.0/bin/run.sh pmd -d force-app/** -R pmd-ruleset.xml -failOnViolation true -f sarif > pmd-raw-output.sarif
           
           
-          echo $(cat pmd-raw-output.sarif)
+      - name: Show files
+        run: |
+          echo $(ls)
 
-          # # Loop through each rule and see if an error should be thrown
-          echo "::set-output name=error-found::false"
-          while read -r rule; do
-              RULE="$(echo "$rule" | jq --raw-output '.id')"
-              if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
-                  echo "::set-output name=error-found::true"
-                  break
-              fi
 
-          # done <<< "$(cat pmd-raw-output.sarif | jq --compact-output '.runs[] .tool .driver .rules[]')"
-          # # Set the correct file location for the report
-          # cat pmd-raw-output.sarif | jq --arg workspace "$WORKSPACE" '(.runs[] .results[] .locations[] .physicalLocation .artifactLocation .uri) |= ltrimstr($workspace)' > pmd-file-locations-output.sarif
-          # # Set the rule level configurations for whether they are notes or errors
-          # cat pmd-file-locations-output.sarif | jq --arg errors "$ERROR_RULES" '((.runs[] .tool .driver .rules[]) | select(.id==($errors | split(",")[]))) += {"defaultConfiguration": {"level": "error"}}' > pmd-errors-output.sarif
-          # cat pmd-errors-output.sarif | jq --arg notes "$NOTE_RULES" '((.runs[] .tool .driver .rules[]) | select(.id==($notes | split(",")[]))) += {"defaultConfiguration": {"level": "note"}}' > pmd-output.sarif
+
+
+        #echo $(cat pmd-raw-output.sarif)
+
+        # # Loop through each rule and see if an error should be thrown
+        # echo "::set-output name=error-found::false"
+        # while read -r rule; do
+        #     RULE="$(echo "$rule" | jq --raw-output '.id')"
+        #     if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
+        #         echo "::set-output name=error-found::true"
+        #         break
+        #     fi
+
+        # done <<< "$(cat pmd-raw-output.sarif | jq --compact-output '.runs[] .tool .driver .rules[]')"
+        # # Set the correct file location for the report
+        # cat pmd-raw-output.sarif | jq --arg workspace "$WORKSPACE" '(.runs[] .results[] .locations[] .physicalLocation .artifactLocation .uri) |= ltrimstr($workspace)' > pmd-file-locations-output.sarif
+        # # Set the rule level configurations for whether they are notes or errors
+        # cat pmd-file-locations-output.sarif | jq --arg errors "$ERROR_RULES" '((.runs[] .tool .driver .rules[]) | select(.id==($errors | split(",")[]))) += {"defaultConfiguration": {"level": "error"}}' > pmd-errors-output.sarif
+        # cat pmd-errors-output.sarif | jq --arg notes "$NOTE_RULES" '((.runs[] .tool .driver .rules[]) | select(.id==($notes | split(",")[]))) += {"defaultConfiguration": {"level": "note"}}' > pmd-output.sarif
 
       # - name: Setup JRE
       #   uses: actions/setup-java@v1
