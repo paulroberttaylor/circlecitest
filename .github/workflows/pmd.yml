@@ -22,9 +22,11 @@ jobs:
 
       - name: Install PMD
         run: |
+
+          echo $(ls)
           wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
           unzip pmd-bin-6.36.0.zip
-          pmd-bin-6.36.0/bin/run.sh pmd -d ./force-app/main/default/classes -R rulesets/java/quickstart.xml -failOnViolation true
+          pmd-bin-6.36.0/bin/run.sh pmd -d force-app/main/default/classes -R rulesets/java/quickstart.xml -failOnViolation true
           
           # -f sarif > pmd-raw-output.sarif
           
