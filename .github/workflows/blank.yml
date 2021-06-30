@@ -7,8 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the circleci-project-setup branch
   push:
     branches: [ circleci-project-setup ]
-  pull_request:
-    branches: [ circleci-project-setup ]
+  # pull_request:
+  #   branches: [ circleci-project-setup ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,6 +24,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+
+      - name: 'Create scratch org'
+        uses: forcedotcom/salesforcedx-actions@master
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
