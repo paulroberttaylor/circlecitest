@@ -31,14 +31,14 @@ jobs:
           pmd-version: '6.34.0'
           file-path: './src'
           rules-path: './pmd-ruleset.xml'
-          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
-          note-rules: 'ApexDoc'
+          #error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+         # note-rules: 'ApexDoc'
 
-      - name: Upload results to GitHub
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: pmd-output.sarif
-          
+      # - name: Upload results to GitHub
+      #   uses: github/codeql-action/upload-sarif@v1
+      #   with:
+      #     sarif_file: pmd-output.sarif
+
       - name: No PMD Errors?
         run: |
           if ${{ steps.pmd-analysis.outputs.error-found }}
