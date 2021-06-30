@@ -24,7 +24,7 @@ jobs:
         with:
           pmd-version: '6.36.0'
           file-path: 'force-app/**'
-          rules-path: 'pmd-ruleset.xml'
+          rules-path: './pmd-ruleset.xml'
           error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
           note-rules: 'ApexDoc'
       - name: Upload results to GitHub
