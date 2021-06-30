@@ -20,24 +20,26 @@ jobs:
           fetch-depth: '0'
 
 
-      # - name: Install PMD
-      #   run: |
+      - name: Install PMD
+        run: |
 
-      #     echo $(ls)
-      #     echo "$(ls)"
-      #     wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
-      #     unzip pmd-bin-6.36.0.zip
-      #     pmd-bin-6.36.0/bin/run.sh pmd -d force-app/** -R pmd-ruleset.xml -failOnViolation true -f sarif > pmd-raw-output.sarif
+          echo $(ls)
+          echo "$(ls)"
+          wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
+          unzip pmd-bin-6.36.0.zip
+          pmd-bin-6.36.0/bin/run.sh pmd -d force-app/** -R pmd-ruleset.xml -failOnViolation true -f sarif > pmd-raw-output.sarif
           
           
-      #     # # Loop through each rule and see if an error should be thrown
-      #     echo "::set-output name=error-found::false"
-      #     while read -r rule; do
-      #         RULE="$(echo "$rule" | jq --raw-output '.id')"
-      #         if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
-      #             echo "::set-output name=error-found::true"
-      #             break
-      #         fi
+          echo $(cat pmd-raw-output.sarif)
+          
+          # # Loop through each rule and see if an error should be thrown
+          echo "::set-output name=error-found::false"
+          while read -r rule; do
+              RULE="$(echo "$rule" | jq --raw-output '.id')"
+              if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
+                  echo "::set-output name=error-found::true"
+                  break
+              fi
 
           # done <<< "$(cat pmd-raw-output.sarif | jq --compact-output '.runs[] .tool .driver .rules[]')"
           # # Set the correct file location for the report
@@ -62,9 +64,9 @@ jobs:
       #   run: pmd -d ./force-app -R rulesets/java/quickstart.xml -f xml --failOnViolation false > report.xml
 
 
-      - uses: sfdx-actions/setup-pmd@v1
-      - name: run-pmd
-        run: pmd -d ./force-app/** -R pmd-ruleset.xml -f xml --failOnViolation false > report.xml
+      # - uses: sfdx-actions/setup-pmd@v1
+      # - name: run-pmd
+      #   run: pmd -d ./force-app/** -R pmd-ruleset.xml -f xml --failOnViolation false > report.xml
 
         # run: echo $(pmd -d ./force-app -R rulesets/java/quickstart.xml -f json)
 
