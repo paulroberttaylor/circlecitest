@@ -57,6 +57,7 @@ jobs:
           command: |
 
             echo "${steps.branches.outputs.source}"
+            echo ${steps.branches.outputs.source}
             #echo "Source ${{steps.branches.outputs.target}}"
             #git diff --name-only --diff-filter=d origin/"$TARGET_BRANCH"..origin/"${{SOURCE_BRANCH#}"refs/heads/"}" | paste -s -d "," >> diff-file.csv
 
