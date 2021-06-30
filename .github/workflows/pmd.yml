@@ -20,8 +20,8 @@ jobs:
           fetch-depth: '0'
 
 
-      - name: run-pmd
       - uses: sfdx-actions/setup-pmd@v1
+      - name: run-pmd
         run: pmd -d ./force-app -R category/apex/design.xml -f text
 
       # - name: Run PMD Analyser
