@@ -31,13 +31,13 @@ jobs:
           
           
           # # Loop through each rule and see if an error should be thrown
-          # echo "::set-output name=error-found::false"
-          # while read -r rule; do
-          #     RULE="$(echo "$rule" | jq --raw-output '.id')"
-          #     if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
-          #         echo "::set-output name=error-found::true"
-          #         break
-          #     fi
+          echo "::set-output name=error-found::false"
+          while read -r rule; do
+              RULE="$(echo "$rule" | jq --raw-output '.id')"
+              if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
+                  echo "::set-output name=error-found::true"
+                  break
+              fi
 
           # done <<< "$(cat pmd-raw-output.sarif | jq --compact-output '.runs[] .tool .driver .rules[]')"
           # # Set the correct file location for the report
