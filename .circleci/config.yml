@@ -5,6 +5,9 @@ version: 2.1
 #         type: string
 #         default: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
+machine:
+  image: ubuntu-1604:202007-01
+
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
   jq: circleci/jq@2.2.0
@@ -18,8 +21,6 @@ jobs:
 
   create-push-delete:
 
-    machine:
-      image: ubuntu-1604:202007-01
 
     executor: sfdx/default
 
