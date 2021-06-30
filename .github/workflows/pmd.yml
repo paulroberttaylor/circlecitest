@@ -19,21 +19,26 @@ jobs:
           # Incremental diffs require fetch depth to be at 0 to grab the target branch
           fetch-depth: '0'
 
-      - name: Run PMD Analyser
-        id: pmd-analysis
-        uses: synergy-au/pmd-analyser-action@v2
-        with:
-          pmd-version: '6.34.0'
-          file-path: './force-app'
-          rules-path: 'pmd-ruleset.xml'
-          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
-          note-rules: 'ApexDoc'
+
+      - name: run-pmd
+        uses: sfdx-actions/setup-pmd@v1
+        run: pmd -d ./force-app/main/default/classes -R category/apex/design.xml -f text
+
+      # - name: Run PMD Analyser
+      #   id: pmd-analysis
+      #   uses: synergy-au/pmd-analyser-action@v2
+      #   with:
+      #     pmd-version: '6.34.0'
+      #     file-path: './force-app'
+      #     rules-path: 'pmd-ruleset.xml'
+      #     error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+      #     note-rules: 'ApexDoc'
       
-      - name: Print PMD results
-        run: |
-          echo "Printing PMD results"
-          echo ${{steps.pmd-analysis.outputs.error-found}}
-          echo ${{steps.pmd-analysis.outputs}}
+      # - name: Print PMD results
+      #   run: |
+      #     echo "Printing PMD results"
+      #     echo ${{steps.pmd-analysis.outputs.error-found}}
+      #     echo ${{steps.pmd-analysis.outputs}}
 
       # - name: Upload results to GitHub
       #   uses: github/codeql-action/upload-sarif@v1
