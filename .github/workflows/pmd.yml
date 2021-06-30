@@ -19,6 +19,40 @@ jobs:
           # Incremental diffs require fetch depth to be at 0 to grab the target branch
           fetch-depth: '0'
 
+
+      - name: Install PMD
+        run: |
+          wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F"${PMD_VERSION}"/pmd-bin-"${PMD_VERSION}".zip
+          unzip pmd-bin-"${PMD_VERSION}".zip
+          # Now either run the full analysis or files changed based on the settings defined
+          if [ "$ANALYSE_ALL_CODE" == 'true' ]; then
+              pmd-bin-"${PMD_VERSION}"/bin/run.sh pmd -d "$FILE_PATH" -R "$RULES_PATH" -failOnViolation false -f sarif > pmd-raw-output.sarif
+          else
+              # Now to determine whether to get the files changed from a git diff or using the files changed in a GitHub Pull Request
+              # Both options will generate a CSV file first with the files changed
+              if [ "$FILE_DIFF_TYPE" == 'git' ]; then
+                  git diff --name-only --diff-filter=d origin/"$TARGET_BRANCH"..origin/"${SOURCE_BRANCH#"refs/heads/"}" | paste -s -d "," >> diff-file.csv
+              else
+                  curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${AUTH_TOKEN}" https://api.github.com/repos/"$REPO_NAME"/pulls/"$PR_NUMBER"/files | jq --raw-output '.[] .filename' | paste -s -d "," >> diff-file.csv
+              fi
+              # Run the analysis
+              pmd-bin-"${PMD_VERSION}"/bin/run.sh pmd -filelist diff-file.csv -R "$RULES_PATH" -failOnViolation false -f sarif > pmd-raw-output.sarif
+          fi
+          # Loop through each rule and see if an error should be thrown
+          echo "::set-output name=error-found::false"
+          while read -r rule; do
+              RULE="$(echo "$rule" | jq --raw-output '.id')"
+              if [[ $RULE && "$ERROR_RULES" == *"$RULE"* ]]; then
+                  echo "::set-output name=error-found::true"
+                  break
+              fi
+          done <<< "$(cat pmd-raw-output.sarif | jq --compact-output '.runs[] .tool .driver .rules[]')"
+          # Set the correct file location for the report
+          cat pmd-raw-output.sarif | jq --arg workspace "$WORKSPACE" '(.runs[] .results[] .locations[] .physicalLocation .artifactLocation .uri) |= ltrimstr($workspace)' > pmd-file-locations-output.sarif
+          # Set the rule level configurations for whether they are notes or errors
+          cat pmd-file-locations-output.sarif | jq --arg errors "$ERROR_RULES" '((.runs[] .tool .driver .rules[]) | select(.id==($errors | split(",")[]))) += {"defaultConfiguration": {"level": "error"}}' > pmd-errors-output.sarif
+          cat pmd-errors-output.sarif | jq --arg notes "$NOTE_RULES" '((.runs[] .tool .driver .rules[]) | select(.id==($notes | split(",")[]))) += {"defaultConfiguration": {"level": "note"}}' > pmd-output.sarif
+
       # - name: Setup JRE
       #   uses: actions/setup-java@v1
       #   with:
@@ -37,21 +71,21 @@ jobs:
 
         # run: echo $(pmd -d ./force-app -R rulesets/java/quickstart.xml -f json)
 
-      - name: Run PMD Analyser
-        id: pmd-analysis
-        uses: synergy-au/pmd-analyser-action@v2
-        with:
-          pmd-version: '6.34.0'
-          file-path: './force-app'
-          rules-path: 'rulesets/java/quickstart.xml'
-          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
-          note-rules: 'ApexDoc'
+      # - name: Run PMD Analyser
+      #   id: pmd-analysis
+      #   uses: synergy-au/pmd-analyser-action@v2
+      #   with:
+      #     pmd-version: '6.34.0'
+      #     file-path: './force-app'
+      #     rules-path: 'rulesets/java/quickstart.xml'
+      #     error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+      #     note-rules: 'ApexDoc'
       
-      - name: Print PMD results
-        run: |
-          echo "Printing PMD results"
-          echo ${{steps.pmd-analysis.outputs.error-found}}
-          echo ${{steps.pmd-analysis.outputs}}
+      # - name: Print PMD results
+      #   run: |
+      #     echo "Printing PMD results"
+      #     echo ${{steps.pmd-analysis.outputs.error-found}}
+      #     echo ${{steps.pmd-analysis.outputs}}
 
       # - name: Upload results to GitHub
       #   uses: github/codeql-action/upload-sarif@v1
