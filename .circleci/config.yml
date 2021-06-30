@@ -55,11 +55,11 @@ jobs:
       - run:
           name: Diff only PMD
           command: |
-
-            echo "${steps.branches.outputs.source}"
-            echo ${steps.branches.outputs.source}
+            echo ${CIRCLE_BRANCH}
+            #echo "${steps.branches.outputs.source}"
+            #echo ${steps.branches.outputs.source}
             #echo "Source ${{steps.branches.outputs.target}}"
-            #git diff --name-only --diff-filter=d origin/"$TARGET_BRANCH"..origin/"${{SOURCE_BRANCH#}"refs/heads/"}" | paste -s -d "," >> diff-file.csv
+            #git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/main/refs/heads/"}" | paste -s -d "," >> diff-file.csv
 
       - run: 
           name: Run Static Analysis
