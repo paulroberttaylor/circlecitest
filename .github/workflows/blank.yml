@@ -14,11 +14,6 @@ jobs:
 
     steps:
 
-      # - name: 'Create scratch org'
-      #   uses: forcedotcom/salesforcedx-actions@master
-      #   with:
-      #       args: 'force:org:list'
-
       - name: 'Install Salesforce CLI'
         run: |
             wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
@@ -29,6 +24,25 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: 'List orgs'
-        run: sfdx force:org:list
+      - name: Run PMD Analyser
+        id: pmd-analysis
+        uses: synergy-au/pmd-analyser-action@v2
+        with:
+          pmd-version: '6.34.0'
+          file-path: './src'
+          rules-path: './pmd-ruleset.xml'
+          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+          note-rules: 'ApexDoc'
+
+      - name: Upload results to GitHub
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: pmd-output.sarif
+          
+      - name: No PMD Errors?
+        run: |
+          if ${{ steps.pmd-analysis.outputs.error-found }}
+          then
+            exit 3
+          fi
 
