@@ -30,6 +30,8 @@ jobs:
           
       - name: Show files
         run: |
+          echo "Plese show some files."
+          echo "$(ls)"
           echo $(ls)
 
 
