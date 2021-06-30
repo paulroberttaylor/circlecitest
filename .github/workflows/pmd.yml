@@ -22,7 +22,7 @@ jobs:
 
       - uses: sfdx-actions/setup-pmd@v1
       - name: run-pmd
-        run: pmd -d ./force-app -R pmd-ruleset.xml -f text
+        run: pmd -d ./force-app -R rulesets/java/quickstart.xml -f text
 
       # - name: Run PMD Analyser
       #   id: pmd-analysis
