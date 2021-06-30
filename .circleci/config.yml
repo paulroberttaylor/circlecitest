@@ -15,8 +15,8 @@ workflows:
     jobs:
       - static-analysis
       - create-push-delete:
-        requires
-          - static-analysis
+          requires:
+            - static-analysis
 
 
 jobs:
