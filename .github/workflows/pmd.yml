@@ -22,8 +22,6 @@ jobs:
 
       - name: Install PMD
         run: |
-
-          echo ${{ inputs.file-path }}
           wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
           unzip pmd-bin-6.36.0.zip
           # Now either run the full analysis or files changed based on the settings defined
