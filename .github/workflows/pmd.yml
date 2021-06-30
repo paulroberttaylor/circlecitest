@@ -18,15 +18,15 @@ jobs:
         with:
           fetch-depth: '0'
 
-      - name: Run PMD Analyser
-        id: pmd-analysis
-        uses: synergy-au/pmd-analyser-action@v2
-        with:
-          pmd-version: '6.36.0'
-          file-path: './force-app'
-          rules-path: './pmd-ruleset.xml'
-          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
-          note-rules: 'ApexDoc'
+      # - name: Run PMD Analyser
+      #   id: pmd-analysis
+      #   uses: synergy-au/pmd-analyser-action@v2
+      #   with:
+      #     pmd-version: '6.36.0'
+      #     file-path: './force-app'
+      #     rules-path: './pmd-ruleset.xml'
+      #     error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+      #     note-rules: 'ApexDoc'
 
       # - name: Upload results to GitHub
       #   uses: github/codeql-action/upload-sarif@v1
@@ -40,6 +40,15 @@ jobs:
       #     fi
 
 
+      - name: pmd
+        run: |
+          if [ "$FILE_DIFF_TYPE" == 'git' ]; then
+            git diff --name-only --diff-filter=d origin/${{ steps.branches.outputs.target }}..origin/"${SOURCE_BRANCH#"refs/heads/"}" | paste -s -d "," >> diff-file.csv
+          else
+            curl -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${AUTH_TOKEN}" https://api.github.com/repos/${{ github.event.repository.full_name }}/pulls/"${{ github.event.number }}"/files | jq --raw-output '.[] .filename' | paste -s -d "," >> diff-file.csv
+          fi
+          # Run the analysis
+          pmd-bin-"${PMD_VERSION}"/bin/run.sh pmd -filelist diff-file.csv -R "$RULES_PATH" -failOnViolation false -f sarif > pmd-raw-output.sarif
 
 
       # - name: Install PMD

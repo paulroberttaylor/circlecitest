@@ -29,28 +29,36 @@ jobs:
       - jq/install
 
       - run:
-          name: Print username
-          command: echo "<< pipeline.parameters.USERNAME >>"
+        name: Print username
+        command: echo "<< pipeline.parameters.USERNAME >>"
 
       - sfdx/auth:
-          defaultusername: devhub20210620@prt.com
+        defaultusername: devhub20210620@prt.com
 
-      - sfdx/scratch-create:
-          scratch-alias: << pipeline.parameters.USERNAME >>
-          scratch-config: ./config/project-scratch-def.json
+      - run:
+        name: Install PMD
+        command: |
+          curl -L "https://github.com/pmd/pmd/releases/download/pmd_releases/6.36.0/pmd-bin-6.36.0.zip" -o pmd-bin-6.36.0.zip
+          unzip pmd-bin-6.36.0.zip
+          rm pmd-bin-6.36.0.zip
+          pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f text -l apex -r static-analysis.txt
+
+      # - sfdx/scratch-create:
+      #     scratch-alias: << pipeline.parameters.USERNAME >>
+      #     scratch-config: ./config/project-scratch-def.json
  
 
-      - run:
-          name: Push source
-          command: >
-            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
+      # - run:
+      #     name: Push source
+      #     command: >
+      #       sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
-      - run:
-          name: Run tests
-          command: >
-            echo $(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
-            echo $TEST_RESULT | jq '.result.outcome'
+      # - run:
+      #     name: Run tests
+      #     command: >
+      #       echo $(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
+      #       echo $TEST_RESULT | jq '.result.outcome'
             
-      - sfdx/scratch-delete:
-          scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
+      # - sfdx/scratch-delete:
+      #     scratch-alias: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
 
