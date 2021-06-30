@@ -56,10 +56,10 @@ jobs:
       - run: 
           name: Run Static Analysis
           command: |
-              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f html -l apex -r ./artifacts/static-analysis.html
+              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f html -l apex -r /tmp/artifacts/static-analysis.html
               
               echo "Show the analysis here:"
-              echo $(cat ./artifacts/static-analysis.html)
+              echo $(cat /temp/artifacts/static-analysis.html)
 
       - store_artifacts:
           path: /tmp/artifacts
