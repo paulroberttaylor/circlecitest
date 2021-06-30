@@ -28,22 +28,8 @@ jobs:
 
       - name: Run PMD rules
         run: |
-          pmd-bin-6.36.0/bin/run.sh pmd -d force-app/** -R pmd-ruleset.xml -failOnViolation false -f sarif > pmd-raw-output.json
-          
-          
-      # - name: Show files
-      #   run: |
-      #     echo "Plese show some files."
-      #     echo "$(ls)"
-      #     echo $(ls)
+          pmd-bin-6.36.0/bin/run.sh pmd -d force-app/** -R pmd-ruleset.xml -failOnViolation false -f sarif > pmd-raw-output.sarif
 
-      - name: Show json file
-        run: |
-          # echo $(cat pmd-raw-output.json)
-
-          #echo "`jq '.base_config[0].value="Alpha-21"' pmd-raw-output.json `"
-
-          # Loop through each rule and see if an error should be thrown
           echo "::set-output name=error-found::false"
           while read -r rule; do
               RULE="$(echo "$rule" | jq --raw-output '.id')"
@@ -51,6 +37,8 @@ jobs:
                   echo "::set-output name=error-found::true"
                   break
               fi
+          done <<< "$(cat pmd-raw-output.sarif | jq --compact-output '.runs[] .tool .driver .rules[]')"
+
 
       # - name: Run PMD Analyser
       #   id: pmd-analysis
