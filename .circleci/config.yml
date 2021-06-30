@@ -14,9 +14,11 @@ workflows:
   basic-test:
     jobs:
       - static-analysis
-      - create-push-delete:
-          requires:
-            - static-analysis
+      - create-push-delete
+      
+      # - create-push-delete:
+      #     requires:
+      #       - static-analysis
 
 
 jobs:
@@ -61,8 +63,7 @@ jobs:
           path: /tmp/artifacts
           #destination: static-analysis.html
 
-
-
+          
 
   create-push-delete:
 
