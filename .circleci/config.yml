@@ -14,7 +14,10 @@ workflows:
   basic-test:
     jobs:
       - static-analysis
-      - create-push-delete
+      - create-push-delete:
+        requires
+          - static-analysis
+
 
 jobs:
 
