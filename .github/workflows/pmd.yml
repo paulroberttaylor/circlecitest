@@ -33,6 +33,7 @@ jobs:
         run: |
           echo "Printing PMD results"
           echo ${{steps.pmd-analysis.outputs.error-found}}
+          echo ${{steps.pmd-analysis.outputs}}
 
       # - name: Upload results to GitHub
       #   uses: github/codeql-action/upload-sarif@v1
