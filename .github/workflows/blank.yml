@@ -29,6 +29,6 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: 'Create scratch org'
+      - name: 'List orgs'
         run: sfdx force:org:list
 
