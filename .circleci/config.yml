@@ -39,23 +39,23 @@ jobs:
           scratch-alias: << pipeline.parameters.USERNAME >>
           scratch-config: ./config/project-scratch-def.json
 
-      - run:
-          name: Parse orgs
-          command: |
-            sfdx force:org:list --json
+      # - run:
+      #     name: Parse orgs
+      #     command: |
+      #       sfdx force:org:list --json
 
-      - run:
-          name: Parse orgs 2
-          command: |
-            ORGS=$(echo sfdx force:org:list --json)
-            echo "$ORGS"
+      # - run:
+      #     name: Parse orgs 2
+      #     command: |
+      #       ORGS=$(echo sfdx force:org:list --json)
+      #       echo "$ORGS"
 
-      - run:
-          name: Parse orgs 3
-          command: |
-            ORGS=$(sfdx force:org:list --json)
-            echo "$ORGS"
-            echo $ORGS | jq '.result.nonScratchOrgs[0].username'
+      # - run:
+      #     name: Parse orgs 3
+      #     command: |
+      #       ORGS=$(sfdx force:org:list --json)
+      #       echo "$ORGS"
+      #       echo $ORGS | jq '.result.nonScratchOrgs[0].username'
 
       # - run:
       #     name: Test jq
@@ -73,17 +73,17 @@ jobs:
       #       echo "This is another line."
       #       sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json
 
-      - run:
-          name: Test scripts
-          command: |
-            RESULTS=$(sfdx force:apex:test:run -l RunLocalTests -u << pipeline.parameters.USERNAME >> -w 30 --json)
-            echo $RESULTS
-
       # - run:
-      #     name: Run tests
-      #     command: >
-      #       echo $(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
-      #       echo $TEST_RESULT | jq '.result.outcome'
+      #     name: Test scripts
+      #     command: |
+      #       RESULTS=$(sfdx force:apex:test:run -l RunLocalTests -u << pipeline.parameters.USERNAME >> -w 30 --json)
+      #       echo $RESULTS
+
+      - run:
+          name: Run tests
+          command: >
+            echo $(sfdx force:apex:test:run -l RunLocalTests -u circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH} -w 30 --json)
+            echo $TEST_RESULT | jq '.result.outcome'
             
 
       - sfdx/scratch-delete:
