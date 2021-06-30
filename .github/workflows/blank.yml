@@ -25,7 +25,9 @@ jobs:
 
       - name: 'Create scratch org'
         uses: forcedotcom/salesforcedx-actions@master
-        
+        with:
+            args: 'force:org:list'
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
