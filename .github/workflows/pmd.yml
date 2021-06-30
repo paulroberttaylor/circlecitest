@@ -22,16 +22,14 @@ jobs:
 
       - name: Install PMD
         run: |
-
-          echo $(ls)
-          echo "$(ls)"
+        
           wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
           unzip pmd-bin-6.36.0.zip
           pmd-bin-6.36.0/bin/run.sh pmd -d force-app/** -R pmd-ruleset.xml -failOnViolation true -f sarif > pmd-raw-output.sarif
           
           
           echo $(cat pmd-raw-output.sarif)
-          
+
           # # Loop through each rule and see if an error should be thrown
           echo "::set-output name=error-found::false"
           while read -r rule; do
