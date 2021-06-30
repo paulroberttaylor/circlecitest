@@ -43,6 +43,17 @@ jobs:
                   unzip pmd-bin-6.0.1.zip
                   rm pmd-bin-6.0.1.zip
               fi
+          
+      - save_cache:
+          key: pmd-v6.0.1
+          paths: 
+              - pmd-bin-6.0.1
+      - run: 
+          name: Run Static Analysis
+          command: |
+              pmd-bin-6.0.1/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f text -l apex -r static-analysis.txt 
+      - store_artifacts:
+          path: static-analysis.txt
 
       # - sfdx/scratch-create:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
