@@ -21,7 +21,7 @@ workflows:
   basic-test:
     jobs:
       - static-analysis
-      # - create-push-delete
+      - create-push-delete
 
 jobs:
 
@@ -55,7 +55,7 @@ jobs:
       - run: 
           name: Run Static Analysis
           command: |
-              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f text -l apex -r ./artifacts/static-analysis.txt 
+              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f html -l apex -r ./artifacts/static-analysis.txt 
               
               echo "Show the analysis here:"
               echo $(cat ./artifacts/static-analysis.txt)
