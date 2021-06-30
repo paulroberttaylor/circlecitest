@@ -26,6 +26,9 @@ workflows:
 jobs:
 
   static-analysis:
+
+    working_directory: /tmp
+
     docker:
       - image: circleci/openjdk:latest
     steps:
@@ -33,6 +36,13 @@ jobs:
       - restore_cache:
           keys: 
             - pmd-v6.36.0
+
+      - run:
+          name: Creating Artifacts folder
+          command: |
+            mkdir /tmp/artifacts;
+            #echo "my artifact files in a dir" > /tmp/artifacts/art-2;
+            
       - run:
           name: Install PMD
           command: |
@@ -50,7 +60,7 @@ jobs:
           command: |
               pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r static-analysis.txt 
       - store_artifacts:
-          path: static-analysis.txt
+          path: /tmp/artifacts/static-analysis.txt
 
 
   create-push-delete:
