@@ -34,13 +34,17 @@ jobs:
           echo "$(ls)"
           echo $(ls)
 
+      - name: Show scarif file
+        run: |
+          echo $(cat pmd-raw-output.sarif)
+
 
       - name: Run PMD Analyser
         id: pmd-analysis
         uses: synergy-au/pmd-analyser-action@v2
         with:
           pmd-version: '6.34.0'
-          file-path: './force-app/**'
+          file-path: 'force-app/**'
           rules-path: 'pmd-ruleset.xml'
           error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
           note-rules: 'ApexDoc'
