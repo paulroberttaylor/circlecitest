@@ -27,20 +27,13 @@ jobs:
       - run:
           name: Creating Dummy Artifacts
           command: |
-            echo "my artifact file" > /tmp/art-1;
             mkdir /tmp/artifacts;
-            echo "my artifact files in a dir" > /tmp/artifacts/art-2;
           
       - checkout
       - restore_cache:
           keys: 
             - pmd-v6.36.0
 
-      - run:
-          name: Creating Artifacts folder
-          command: |
-            mkdir artifacts;
-            
       - run:
           name: Install PMD
           command: |
@@ -56,7 +49,7 @@ jobs:
       - run: 
           name: Run Static Analysis
           command: |
-              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f html -l apex -r /tmp/artifacts/static-analysis.html
+              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
               
               echo "Show the analysis here:"
               echo $(cat /temp/artifacts/static-analysis.html)
