@@ -7,7 +7,7 @@ public class MyNewClassTest {
     }
 
     @isTest
-    static void AddTwoDigitsReturnsTheSum() {
+    static void addTwoDigitsReturnsTheSum() {
 
         MyNewClass newClass = new MyNewClass();
 
