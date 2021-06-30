@@ -38,10 +38,10 @@ jobs:
       - run:
         name: Install PMD
         command: |
-          curl -L "https://github.com/pmd/pmd/releases/download/pmd_releases/6.36.0/pmd-bin-6.36.0.zip" -o pmd-bin-6.36.0.zip
+          wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
           unzip pmd-bin-6.36.0.zip
           rm pmd-bin-6.36.0.zip
-          pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f text -l apex -r static-analysis.txt
+          #pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f text -l apex -r static-analysis.txt
 
       # - sfdx/scratch-create:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
