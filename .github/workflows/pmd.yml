@@ -19,16 +19,16 @@ jobs:
           # Incremental diffs require fetch depth to be at 0 to grab the target branch
           fetch-depth: '0'
 
-      - name: Setup JRE
-        uses: actions/setup-java@v1
-        with:
-          java-version: '13.0.2'
-          java-package: jre
-          architecture: x64
+      # - name: Setup JRE
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: '13.0.2'
+      #     java-package: jre
+      #     architecture: x64
 
-      - uses: ashkumar-wtc/setup-pmd@v1
-      - name: run-pmd
-        run: pmd -d ./force-app -R rulesets/java/quickstart.xml -f xml --failOnViolation false > report.xml
+      # - uses: ashkumar-wtc/setup-pmd@v1
+      # - name: run-pmd
+      #   run: pmd -d ./force-app -R rulesets/java/quickstart.xml -f xml --failOnViolation false > report.xml
 
 
       # - uses: sfdx-actions/setup-pmd@v1
@@ -37,21 +37,21 @@ jobs:
 
         # run: echo $(pmd -d ./force-app -R rulesets/java/quickstart.xml -f json)
 
-      # - name: Run PMD Analyser
-      #   id: pmd-analysis
-      #   uses: synergy-au/pmd-analyser-action@v2
-      #   with:
-      #     pmd-version: '6.34.0'
-      #     file-path: './force-app'
-      #     rules-path: 'pmd-ruleset.xml'
-      #     error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
-      #     note-rules: 'ApexDoc'
+      - name: Run PMD Analyser
+        id: pmd-analysis
+        uses: synergy-au/pmd-analyser-action@v2
+        with:
+          pmd-version: '6.34.0'
+          file-path: './force-app'
+          rules-path: 'rulesets/java/quickstart.xml'
+          error-rules: 'AvoidDirectAccessTriggerMap,AvoidDmlStatementsInLoops,AvoidHardcodingId'
+          note-rules: 'ApexDoc'
       
-      # - name: Print PMD results
-      #   run: |
-      #     echo "Printing PMD results"
-      #     echo ${{steps.pmd-analysis.outputs.error-found}}
-      #     echo ${{steps.pmd-analysis.outputs}}
+      - name: Print PMD results
+        run: |
+          echo "Printing PMD results"
+          echo ${{steps.pmd-analysis.outputs.error-found}}
+          echo ${{steps.pmd-analysis.outputs}}
 
       # - name: Upload results to GitHub
       #   uses: github/codeql-action/upload-sarif@v1
