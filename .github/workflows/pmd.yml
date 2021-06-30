@@ -64,7 +64,7 @@ jobs:
         id: pmd-analysis
         run: |
           pmd-bin-6.36.0/bin/run.sh pmd -d ./force-app/** -R ./pmd-ruleset.xml -failOnViolation false -f sarif > pmd-raw-output.sarif
-          echo (cat pmd-raw-output.sarif)
+          echo $(cat pmd-raw-output.sarif)
 
       - name: No PMD Errors?
         run: |
