@@ -12,8 +12,13 @@ orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
   jq: circleci/jq@2.2.0
   # extend-java: extend/extend-java@0.0.1
-  openjdk-install: cloudesire/openjdk-install@1.2.3
+  # openjdk-install: cloudesire/openjdk-install@1.2.3
 
+executors:
+  default:
+    docker:
+      - image: circleci/openjdk:11.0.2-jdk
+      
 workflows:
   basic-test:
     jobs:
