@@ -9,13 +9,6 @@ version: 2.1
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
   jq: circleci/jq@2.2.0
-  # extend-java: extend/extend-java@0.0.1
-  # openjdk-install: cloudesire/openjdk-install@1.2.3
-
-# executors:
-#   default:
-#     docker:
-#       - image: circleci/openjdk:11.0.2-jdk
 
 workflows:
   basic-test:
@@ -55,7 +48,7 @@ jobs:
       - run: 
           name: Run Static Analysis
           command: |
-              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f html -l apex -r ./artifacts/static-analysis.txt 
+              pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f html -l apex -r ./artifacts/static-analysis.html
               
               echo "Show the analysis here:"
               echo $(cat ./artifacts/static-analysis.txt)
@@ -64,7 +57,6 @@ jobs:
 
 
   create-push-delete:
-
 
     executor: sfdx/default
 
@@ -75,51 +67,14 @@ jobs:
       - sfdx/install
 
       - jq/install
-
     
-
-      # - run:
-      #     name: Install OpenJDK 11
-      #     command: |
-      #       sudo apt-get update && sudo apt-get install openjdk-11-jdk
-      #       sudo update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java
-      #       sudo update-alternatives --set javac /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
-      #       java -version
-
-      # - run:
-      #   name: Print username
-      #   command: echo "<< pipeline.parameters.USERNAME >>"
-
-      # - sfdx/auth:
-      #   defaultusername: devhub20210620@prt.com
-
-      # - run:
-      #     name: Install PMD
-      #     command: |
-      #         if [ ! -d pmd-bin-6.36.0 ]; then
-      #             wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.36.0/pmd-bin-6.36.0.zip
-      #             #curl -L "https://github.com/pmd/pmd/releases/download/pmd_releases/6.36.0/rulesets/java/quickstart.xml.zip" -o pmd-bin-6.36.0.zip
-      #             alias pmd="./pmd-bin-6.36.0/bin/run.sh pmd"
-      #             unzip pmd-bin-6.36.0.zip
-      #             rm pmd-bin-6.36.0.zip
-      #         fi
-          
-      # - save_cache:
-      #     key: pmd-v6.36.0
-      #     paths: 
-      #         - pmd-bin-6.36.0
-      # - run: 
-      #     name: Run Static Analysis
-      #     command: |
-      #         pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f text -l apex -r static-analysis.txt 
-      # - store_artifacts:
-      #     path: static-analysis.txt
+      - sfdx/auth:
+        defaultusername: devhub20210620@prt.com
 
       # - sfdx/scratch-create:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
       #     scratch-config: ./config/project-scratch-def.json
  
-
       # - run:
       #     name: Push source
       #     command: >
