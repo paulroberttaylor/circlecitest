@@ -11,7 +11,8 @@ docker:
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
   jq: circleci/jq@2.2.0
-
+  openjdk-install: cloudesire/openjdk-install@1.2.3
+  
 workflows:
   basic-test:
     jobs:
