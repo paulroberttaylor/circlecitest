@@ -69,7 +69,7 @@ jobs:
       - jq/install
     
       - sfdx/auth:
-        defaultusername: devhub20210620@prt.com
+          defaultusername: devhub20210620@prt.com
 
       # - sfdx/scratch-create:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
