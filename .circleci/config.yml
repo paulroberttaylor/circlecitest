@@ -28,9 +28,9 @@ jobs:
 
       - jq/install
 
-      - run:
-        name: Print username
-        command: echo "<< pipeline.parameters.USERNAME >>"
+      # - run:
+      #   name: Print username
+      #   command: echo "<< pipeline.parameters.USERNAME >>"
 
       - sfdx/auth:
         defaultusername: devhub20210620@prt.com
