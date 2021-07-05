@@ -67,6 +67,11 @@ jobs:
 
             echo "2 ----"
 
+            DIFFS=$(git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d ",")
+            echo "DIFFS"
+            echo $DIFFS
+
+            echo "3 ----"
             echo $(git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d "," >> diff-file.csv)
             echo $(cat diff-file.csv)
 
