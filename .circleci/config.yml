@@ -70,11 +70,15 @@ jobs:
             #git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/circleci-project-setup"}" | paste -s -d "," >> diff-file.csv
             git diff --name-only --diff-filter=d origin/main.."${CIRCLE_BRANCH}" | paste -s -d "," >> diff-file.csv
 
+            echo $(cat diff-file.csv)
+
       - run: 
           name: Run Static Analysis
           command: |
               # pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
-              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
+              # pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
+
+              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation true
               
               echo "Show the analysis here:"
               echo $(cat /temp/artifacts/static-analysis.html)
