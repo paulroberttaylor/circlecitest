@@ -73,6 +73,8 @@ jobs:
       - run: 
           name: Run Static Analysis
           command: |
+
+            echo $(cat diff-file.csv)
               # pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
               # pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
 
