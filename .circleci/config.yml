@@ -65,9 +65,7 @@ jobs:
             #echo ${steps.branches.outputs.source}
             #echo "Source ${{steps.branches.outputs.target}}"
 
-            git fetch origin main:refs/remotes/origin/main
-
-            git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/circleci-project-setup"}" | paste -s -d "," >> diff-file.csv
+            #git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/circleci-project-setup"}" | paste -s -d "," >> diff-file.csv
             git diff "${CIRCLE_BRANCH}"..main"}" | paste -s -d "," >> diff-file.csv
 
       - run: 
