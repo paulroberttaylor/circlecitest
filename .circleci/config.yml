@@ -1,11 +1,5 @@
 version: 2.1
 
-# parameters:
-#     USERNAME:
-#         type: string
-#         default: circle_build_$CIRCLE_BUILD_NUM-${CIRCLE_BRANCH}
-
-
 orbs:
   sfdx: circleci/salesforce-sfdx@2.2.0
   jq: circleci/jq@2.2.0
@@ -57,68 +51,24 @@ jobs:
           paths: 
               - pmd-bin-6.36.0
 
-      - run:
-          name: quick diff
-          command: |
-
-
-            echo "1 ----"
-            echo $(git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -s -d ",")
-
-            echo "2 ----"
-
-            DIFFS=$(git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d ",")
-            echo "DIFFS"
-            echo $DIFFS
-
-            echo "3 ----"
-            echo $DIFFS > diff-file.csv
-            echo $(cat diff-file.csv)
-
-
-            echo "------"
-
-
-
-            
+          
       - run:
           name: Diff only PMD
           command: |
 
-            git diff --name-only "${CIRCLE_BRANCH}"..origin/main
-            echo $(git diff --name-only "${CIRCLE_BRANCH}"..origin/main)
-
             git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d "," > diff-file.csv
             echo $(cat diff-file.csv)
-            
-            # git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste  >> diff-file.csv
-            # echo $(cat diff-file.csv)
-
-            # git diff --name-only origin/main.."${CIRCLE_BRANCH}" | paste -s -d "," >> diff-file.csv
-
-            echo $(cat diff-file.csv)
-
-
-      - run: 
-          name: Display diff file
-          command: |
-            echo "diff-file.csv"
-            echo $(cat diff-file.csv)
-            cat diff-file.csv
-
 
       - run: 
           name: Run Static Analysis
           command: |
-
-            echo $(cat diff-file.csv)
 
               # pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
               # pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
 
               echo ".circleci/config.yml" >> ignorelist.csv
 
-              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -ignorelist ignorelist.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation false
+              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation false
               #pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation true
               
               echo "Show the analysis here:"
