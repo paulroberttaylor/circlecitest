@@ -8,6 +8,8 @@ public with sharing class MyNewClass {
 
 		// Help.
 
+		// Please help.
+
 		How about now
 
 		if(1==1) {
