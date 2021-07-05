@@ -72,7 +72,7 @@ jobs:
             echo $DIFFS
 
             echo "3 ----"
-            echo $DIFFS >> diff-file.csv
+            echo $DIFFS > diff-file.csv
             echo $(cat diff-file.csv)
 
 
