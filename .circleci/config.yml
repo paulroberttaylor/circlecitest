@@ -72,12 +72,12 @@ jobs:
 
 
       - run: 
-          name: DIsplay diff file
+          name: Display diff file
           command: |
             echo "diff-file.csv"
             echo $(cat diff-file.csv)
 
-            
+
       - run: 
           name: Run Static Analysis
           command: |
