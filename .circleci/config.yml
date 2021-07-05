@@ -14,6 +14,11 @@ workflows:
   basic-test:
     jobs:
       - static-analysis
+          filters:
+              branches:
+                  only:
+                      - /feature\/.*/
+                      
       # - create-push-delete
       
       # - create-push-delete:
