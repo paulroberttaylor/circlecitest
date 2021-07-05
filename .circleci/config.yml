@@ -61,18 +61,18 @@ jobs:
           name: Diff only PMD
           command: |
 
-            git diff --name-only --diff-filter=am "${CIRCLE_BRANCH}"..origin/main
-            echo $(git diff --name-only --diff-filter=am "${CIRCLE_BRANCH}"..origin/main)
+            git diff --name-only "${CIRCLE_BRANCH}"..origin/main
+            echo $(git diff --name-only "${CIRCLE_BRANCH}"..origin/main)
 
-            # git diff --name-only --diff-filter=am "${CIRCLE_BRANCH}"..origin/main | paste -s -d "," >> diff-file.csv
-            # echo $(cat diff-file.csv)
+            git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -s -d "," >> diff-file.csv
+            echo $(cat diff-file.csv)
             
-            # git diff --name-only --diff-filter=am "${CIRCLE_BRANCH}"..origin/main | paste  >> diff-file.csv
-            # echo $(cat diff-file.csv)
+            git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste  >> diff-file.csv
+            echo $(cat diff-file.csv)
 
-            # git diff --name-only --diff-filter=d origin/main.."${CIRCLE_BRANCH}" | paste -s -d "," >> diff-file.csv
+            git diff --name-only origin/main.."${CIRCLE_BRANCH}" | paste -s -d "," >> diff-file.csv
 
-            # echo $(cat diff-file.csv)
+            echo $(cat diff-file.csv)
 
 
       - run: 
