@@ -1,11 +1,6 @@
 @isTest
 public class MyNewClassTest {
 
-    @TestSetup
-    static void makeData(){
-        
-    }
-
     @isTest
     static void addTwoDigitsReturnsTheSum() {
 
