@@ -4,6 +4,8 @@ public with sharing class MyNewClass {
 
 		// Add comment
 
+		// Why can't I get it to work properly?
+
 		if(1==1) {
 
 		}
