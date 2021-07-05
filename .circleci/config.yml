@@ -68,10 +68,10 @@ jobs:
             echo "${steps.branches.outputs.source}"
 
             echo "steps.branches.outputs.source"
-            echo ${steps.branches.outputs.source}
+            echo "${steps.branches.outputs.source}"
 
-            echo "Source ${{steps.branches.outputs.source}}"
-            echo "Target ${{steps.branches.outputs.target}}"
+            echo "Source ${steps.branches.outputs.source}"
+            echo "Target ${steps.branches.outputs.target}"
 
             git diff --name-only --diff-filter=d origin/main.."${CIRCLE_BRANCH}" | paste -s -d "," >> diff-file.csv
 
