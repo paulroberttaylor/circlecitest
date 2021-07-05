@@ -58,6 +58,24 @@ jobs:
               - pmd-bin-6.36.0
 
       - run:
+          name: quick diff
+          command: |
+
+
+            echo "1 ----"
+            echo $(git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -s -d ",")
+
+            echo "2 ----"
+
+            echo $(git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d "," >> diff-file.csv)
+            echo $(cat diff-file.csv)
+
+            echo "------"
+
+
+
+            
+      - run:
           name: Diff only PMD
           command: |
 
