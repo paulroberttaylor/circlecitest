@@ -10,8 +10,6 @@ public with sharing class MyNewClass {
 
 		// Please help.
 
-		How about now
-
 		if(1==1) {
 
 		}
