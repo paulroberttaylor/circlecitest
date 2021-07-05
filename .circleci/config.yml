@@ -68,7 +68,7 @@ jobs:
             echo "${steps.branches.outputs.source}"
 
             echo "steps.branches.outputs.source"
-            echo ${steps.branches.outputs.source}
+            echo "${steps.branches.outputs.source}"
 
             echo "Source ${steps.branches.outputs.source}"
             echo "Target ${steps.branches.outputs.target}"
