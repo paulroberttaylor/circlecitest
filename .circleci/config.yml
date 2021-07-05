@@ -51,30 +51,12 @@ jobs:
           paths: 
               - pmd-bin-6.36.0
 
-          
-      - run:
-          name: Diff only PMD
-          command: |
-
-            git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d "," > diff-file.csv
-            echo $(cat diff-file.csv)
-
       - run: 
           name: Run Static Analysis
           command: |
-
-              # pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
-              # pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
-
+              git diff --name-only "${CIRCLE_BRANCH}"..origin/main | paste -d "," > diff-file.csv
               echo ".circleci/config.yml" >> ignorelist.csv
-
-              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -ignorelist ignorelist.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation false
-              #pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation true
-              
-              echo "Show the analysis here:"
-              echo $(cat /temp/artifacts/static-analysis.html)
-
-
+              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -ignorelist ignorelist.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation true
 
       - store_artifacts:
           path: /tmp/artifacts
