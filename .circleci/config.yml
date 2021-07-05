@@ -66,7 +66,13 @@ jobs:
               # pmd-bin-6.36.0/bin/run.sh pmd -d . -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
               # pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html
 
+<<<<<<< HEAD
               pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation false
+=======
+              echo ".circleci/config.yml" >> ignorelist.csv
+
+              pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -ignorelist ignorelist.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation false
+>>>>>>> a0f01a603e6b64d8c42c8074ac466d881d923848
               #pmd-bin-6.36.0/bin/run.sh pmd -filelist diff-file.csv -R ./pmd-ruleset.xml -f summaryhtml -l apex -r /tmp/artifacts/static-analysis.html -failOnViolation true
               
               echo "Show the analysis here:"
