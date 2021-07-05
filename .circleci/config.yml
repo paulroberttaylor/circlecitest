@@ -14,7 +14,7 @@ workflows:
   basic-test:
     jobs:
       - static-analysis
-      - create-push-delete
+      # - create-push-delete
       
       # - create-push-delete:
       #     requires:
@@ -78,20 +78,20 @@ jobs:
 
           
 
-  create-push-delete:
+  # create-push-delete:
 
-    executor: sfdx/default
+  #   executor: sfdx/default
 
-    steps:
+  #   steps:
 
-      - checkout
+  #     - checkout
 
-      - sfdx/install
+  #     - sfdx/install
 
-      - jq/install
+  #     - jq/install
     
-      - sfdx/auth:
-          defaultusername: devhub20210620@prt.com
+  #     - sfdx/auth:
+  #         defaultusername: devhub20210620@prt.com
 
       # - sfdx/scratch-create:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
