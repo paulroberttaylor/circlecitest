@@ -11,14 +11,14 @@ orbs:
   jq: circleci/jq@2.2.0
 
 workflows:
+  version: 2.1
   basic-test:
     jobs:
-      - static-analysis
+      - static-analysis:
           filters:
-              branches:
-                  only:
-                      - /feature\/.*/
-                      
+            branches:
+              only: /feature\/.*/
+
       # - create-push-delete
       
       # - create-push-delete:
@@ -29,11 +29,6 @@ workflows:
 jobs:
 
   static-analysis:
-
-    filters:
-        branches:
-            only:
-                - /feature\/.*/
 
     docker:
       - image: circleci/openjdk:latest
