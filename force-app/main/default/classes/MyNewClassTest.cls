@@ -1,6 +1,7 @@
 @isTest
 public class MyNewClassTest {
 
+    // Here is a comment
     @TestSetup
     static void makeData(){
         
