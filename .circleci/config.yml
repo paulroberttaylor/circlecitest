@@ -70,6 +70,14 @@ jobs:
 
             echo $(cat diff-file.csv)
 
+
+      - run: 
+          name: DIsplay diff file
+          command: |
+            echo "diff-file.csv"
+            echo $(cat diff-file.csv)
+
+            
       - run: 
           name: Run Static Analysis
           command: |
