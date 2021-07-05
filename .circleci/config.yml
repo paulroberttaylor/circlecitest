@@ -69,7 +69,7 @@ jobs:
 
             git fetch origin main:refs/remotes/origin/main
 
-            git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/circleci-project-setup"}" | paste -s -d "," >> diff-file.csv
+            git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/main"}" | paste -s -d "," >> diff-file.csv
 
       - run: 
           name: Run Static Analysis
