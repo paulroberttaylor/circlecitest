@@ -11,6 +11,7 @@ orbs:
   jq: circleci/jq@2.2.0
 
 workflows:
+  version: 2
   basic-test:
     jobs:
       - static-analysis:
