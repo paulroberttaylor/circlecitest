@@ -25,6 +25,11 @@ jobs:
 
   static-analysis:
 
+    branches:
+      only:
+        - master
+        - /feature.*/
+
     docker:
       - image: circleci/openjdk:latest
     steps:
