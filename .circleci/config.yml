@@ -14,7 +14,7 @@ workflows:
   basic-test:
     jobs:
       - static-analysis
-      - create-push-delete
+      # - create-push-delete
       
       # - create-push-delete:
       #     requires:
@@ -27,6 +27,7 @@ jobs:
 
     docker:
       - image: circleci/openjdk:latest
+
     steps:
 
       - run:
@@ -35,6 +36,7 @@ jobs:
             mkdir /tmp/artifacts;
           
       - checkout
+      
       - restore_cache:
           keys: 
             - pmd-v6.36.0
@@ -60,7 +62,7 @@ jobs:
             #echo ${steps.branches.outputs.source}
             #echo "Source ${{steps.branches.outputs.target}}"
 
-            git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/circleci-project-setup"}" | paste -s -d "," >> diff-file.csv
+            git diff --name-only --diff-filter=d origin/"${CIRCLE_BRANCH}"..origin/main"}" | paste -s -d "," >> diff-file.csv
 
       - run: 
           name: Run Static Analysis
@@ -84,14 +86,14 @@ jobs:
 
     steps:
 
-      - checkout
+      # - checkout
 
-      - sfdx/install
+      # - sfdx/install
 
-      - jq/install
+      # - jq/install
     
-      - sfdx/auth:
-          defaultusername: devhub20210620@prt.com
+      # - sfdx/auth:
+      #     defaultusername: devhub20210620@prt.com
 
       # - sfdx/scratch-create:
       #     scratch-alias: << pipeline.parameters.USERNAME >>
