@@ -6,6 +6,8 @@ public with sharing class MyNewClass {
 
 		// Why can't I get it to work properly?
 
+		// Help.
+
 		How about now
 
 		if(1==1) {
